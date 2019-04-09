@@ -2,27 +2,11 @@ import React from 'react';
 import UsersFilter from './UsersFilter';
 import UsersTable from './UsersTable';
 
-import { GITHUB_CREDENTIALS } from '../config/config';
-import { store } from '../store';
-import { connect } from 'react-redux';
-import { SET_USERS } from '../constants/actionTypes';
-
-const mapStateToProps = store => {
-  return {
-    users: store.userState.users || [],
-    searchingCriteria: store.userState.searchingCriteria,
-    sortingCriteria: store.userState.sortingCriteria,
-    ascendingOrder: store.userState.ascendingOrder
-  }
-}
-
 class Users extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      totalPageCount: 0,
-      usersPerPage: 30,
       page: 0,
       searchingValue: '',
       sortingValue: '',
@@ -57,28 +41,17 @@ class Users extends React.Component {
   }
 
   fetchUsers = (page) => {
-    const url = this.applyApiFilters(page);
-
-    fetch(url)
-      .then(response => response.json())
-      .then(result => {
-        const totalPageCount = Math.ceil(result.total_count / this.state.usersPerPage);
-        this.setState({ totalPageCount });
-
-        store.dispatch({
-          type: SET_USERS,
-          users: result.items
-        });
-      });
+    const filters = this.getApiFilters();
+    this.props.fetchUsers(page + 1, filters);
   }
 
-  applyApiFilters = (page) => {
+  getApiFilters = () => {
     const { searchingValue, sortingValue, ascendingOrder } = this.state;
     const search = searchingValue ? ` ${searchingValue} in:login` : searchingValue;
     const sort = sortingValue ? `&sort=${sortingValue}` : '';
     const order = ascendingOrder ? '&order=asc' : '';
 
-    return `https://api.github.com/search/users?q=type:user${search}${sort}${order}&access_token=${GITHUB_CREDENTIALS.OAUTH_TOKEN}&page=${page + 1}`;
+    return `${search}${sort}${order}`;
   }
 
   handleChangePage = (event, page) => {
@@ -89,8 +62,8 @@ class Users extends React.Component {
   }
 
   render() {
-    const { users } = this.props;
-    const { totalPageCount, usersPerPage, page } = this.state;
+    const { users, totalPageCount, usersPerPage } = this.props;
+    const { page } = this.state;
 
     return (
       <div>
@@ -107,4 +80,4 @@ class Users extends React.Component {
   }
 }
 
-export default connect(mapStateToProps)(Users);
+export {Users};
