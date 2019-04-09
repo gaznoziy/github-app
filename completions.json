@@ -1,0 +1,48 @@
+{
+  "components": {
+    "AppHeader": {
+      "attributes": [
+        "classes"
+      ],
+      "props": {
+        "classes": {
+          "type": {
+            "name": "object"
+          },
+          "required": true,
+          "description": ""
+        }
+      }
+    },
+    "UserInfo": {
+      "attributes": [
+        "classes"
+      ],
+      "props": {
+        "classes": {
+          "type": {
+            "name": "object"
+          },
+          "required": true,
+          "description": ""
+        }
+      }
+    },
+    "Users": {},
+    "UsersFilter": {},
+    "UsersTable": {
+      "attributes": [
+        "classes"
+      ],
+      "props": {
+        "classes": {
+          "type": {
+            "name": "object"
+          },
+          "required": true,
+          "description": ""
+        }
+      }
+    }
+  }
+}

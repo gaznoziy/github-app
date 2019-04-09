@@ -1,0 +1,5 @@
+const GITHUB_CREDENTIALS = {
+  OAUTH_TOKEN: "TOKEN"
+};
+
+export { GITHUB_CREDENTIALS };
