@@ -5,9 +5,8 @@ import {
     SET_SORTING_CRITERIA,
     SET_ASCENDING_ORDER
 } from '../constants/actionTypes';
-import { GITHUB_CREDENTIALS } from '../config/config';
 
-const GITHUB_URL = 'https://api.github.com/search/users?q=type:user';
+import { fetchUsersRequest } from '../svc/users';
 
 export const setSearchingCriteria = (searchingCriteria) => {
     return dispatch => {
@@ -28,16 +27,12 @@ export const setAscendingOrder = (value) => {
 }
 
 export const fetchUsers = (page, filters) => {
-    page = `&page=${page}`;
-    return (dispatch, getState) => {
-        fetch(`${GITHUB_URL}${filters}&access_token=${GITHUB_CREDENTIALS.OAUTH_TOKEN}${page}`)
-          .then(response => response.json())
-          .then(result => {
-            const { usersPerPage } = getState().userState;
-            const totalPageCount = Math.ceil(result.total_count / usersPerPage);
+    return async (dispatch, getState) => {
+        const data = await fetchUsersRequest(page, filters);
+        const { usersPerPage } = getState().userState;
+        const totalPageCount = Math.ceil(data.total_count / usersPerPage);
 
-            dispatch({ type: SET_TOTAL_PAGE_COUNT, totalPageCount});
-            dispatch({ type: SET_USERS, users: result.items});
-          });
+        dispatch({ type: SET_TOTAL_PAGE_COUNT, totalPageCount});
+        dispatch({ type: SET_USERS, users: data.items});
     }
 }

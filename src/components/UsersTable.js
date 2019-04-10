@@ -120,8 +120,8 @@ class UsersTable extends React.Component {
     const { classes, users, totalPageCount, usersPerPage, page } = this.props;
 
     return (
-      <div style={{width: '100%', margin: 'auto'}}>
-        <div style={{float: 'left', width: '28%'}}>
+      <div style={{display: 'flex'}}>
+        <div style={{flexBasis: '30%'}}>
           <Paper className={classes.root}>
             <div className={classes.tableWrapper}>
               <Table className={classes.table}>
@@ -168,7 +168,7 @@ class UsersTable extends React.Component {
             </div>
           </Paper>
         </div>
-        <div style={{ marginTop: '30px'}}>
+        <div style={{flexBasis: '30%'}}>
         { this.getUserInfo() }
         </div>
       </div>
