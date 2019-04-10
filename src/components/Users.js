@@ -1,5 +1,5 @@
 import React from 'react';
-import UsersFilter from './UsersFilter';
+import {UsersFilter} from '../containers/users';
 import UsersTable from './UsersTable';
 
 class Users extends React.Component {

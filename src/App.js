@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import AppHeader from './components/AppHeader';
-import {Users} from './containers/Users';
+import {Users} from './containers/users';
 
 class App extends Component {
 

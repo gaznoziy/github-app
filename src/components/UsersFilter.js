@@ -8,11 +8,6 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Checkbox from '@material-ui/core/Checkbox';
 
-import { store } from '../store';
-import { SET_SEARCHING_CRITERIA, 
-         SET_SORTING_CRITERIA,
-         SET_ASCENDING_ORDER } from '../constants/actionTypes';
-
 const styles = theme => ({
   textField: {
     marginLeft: theme.spacing.unit,
@@ -35,22 +30,13 @@ class UsersFilter extends React.Component {
 
   handleChange = name => event => {
     if (name === 'search') {
-      store.dispatch({
-        type: SET_SEARCHING_CRITERIA,
-        searchingCriteria: event.target.value
-      });
+      this.props.setSearchingCriteria(event.target.value);
     } else if (name === 'sort') {
-      store.dispatch({
-        type: SET_SORTING_CRITERIA,
-        sortingCriteria: event.target.value
-      });
+      this.props.setSortingCriteria(event.target.value);
 
       if (event.target.value === '') {
         this.setState({ ascendingSortChecked: false }, () => {
-          store.dispatch({
-            type: SET_ASCENDING_ORDER,
-            ascendingOrder: false
-          });
+          this.props.setAscendingOrder(false);
         });
       }
     }
@@ -60,10 +46,7 @@ class UsersFilter extends React.Component {
 
   handleCheckboxChange = name => event => {
     if (name === 'ascendingSortChecked') {
-      store.dispatch({
-        type: SET_ASCENDING_ORDER,
-        ascendingOrder: event.target.checked
-      });
+      this.props.setAscendingOrder(event.target.checked);
     }
 
     this.setState({ [name]: event.target.checked });

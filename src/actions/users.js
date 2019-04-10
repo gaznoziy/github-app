@@ -1,7 +1,31 @@
-import { SET_USERS, SET_TOTAL_PAGE_COUNT } from '../constants/actionTypes';
+import {
+    SET_USERS,
+    SET_TOTAL_PAGE_COUNT,
+    SET_SEARCHING_CRITERIA,
+    SET_SORTING_CRITERIA,
+    SET_ASCENDING_ORDER
+} from '../constants/actionTypes';
 import { GITHUB_CREDENTIALS } from '../config/config';
 
 const GITHUB_URL = 'https://api.github.com/search/users?q=type:user';
+
+export const setSearchingCriteria = (searchingCriteria) => {
+    return dispatch => {
+        dispatch({ type: SET_SEARCHING_CRITERIA, searchingCriteria });
+    };
+}
+
+export const setSortingCriteria = (sortingCriteria) => {
+    return dispatch => {
+        dispatch({ type: SET_SORTING_CRITERIA, sortingCriteria });
+    };
+}
+
+export const setAscendingOrder = (value) => {
+    return dispatch => {
+        dispatch({ type: SET_ASCENDING_ORDER, ascendingOrder: value });
+    }
+}
 
 export const fetchUsers = (page, filters) => {
     page = `&page=${page}`;
